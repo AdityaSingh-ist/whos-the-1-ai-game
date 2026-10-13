@@ -1,0 +1,936 @@
+{
+  "game": "Who's the 1?",
+  "story": {
+    "agent": "Ra-1",
+    "culprit": "a rival lab",
+    "player_role": "AI forensic auditor"
+  },
+  "bug_hunt": [
+    {
+      "id": "BH-01",
+      "zone": 4,
+      "algorithm": "Breadth-First Search",
+      "difficulty": "easy",
+      "story_intro": "Ra-1's audit log shows a breadth-first route search. One entry was tampered with by the rival lab.",
+      "problem": {
+        "type": "graph",
+        "edges": [
+          "S-A",
+          "S-B",
+          "A-C",
+          "A-D",
+          "B-D",
+          "B-E",
+          "C-G",
+          "D-G",
+          "E-G"
+        ],
+        "adjacency": {
+          "S": [
+            "A",
+            "B"
+          ],
+          "A": [
+            "C",
+            "D",
+            "S"
+          ],
+          "B": [
+            "D",
+            "E",
+            "S"
+          ],
+          "C": [
+            "A",
+            "G"
+          ],
+          "D": [
+            "A",
+            "B",
+            "G"
+          ],
+          "E": [
+            "B",
+            "G"
+          ],
+          "G": [
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        "start": "S",
+        "goal": "G"
+      },
+      "rules": "Neighbours are taken in alphabetical order. A node enters the queue only the first time it is generated. The goal test is applied when a node is removed from the queue.",
+      "steps": [
+        {
+          "n": 1,
+          "text": "Remove S from the front of the queue. New nodes: A, B. Queue: [A, B]."
+        },
+        {
+          "n": 2,
+          "text": "Remove A from the front of the queue. New nodes: C, D. Queue: [B, C, D]."
+        },
+        {
+          "n": 3,
+          "text": "Remove D from the back of the queue. New nodes: G. Queue: [B, C, G]."
+        },
+        {
+          "n": 4,
+          "text": "Remove B from the front of the queue. New nodes: E. Queue: [C, G, E]."
+        },
+        {
+          "n": 5,
+          "text": "Remove C from the front of the queue. New nodes: none. Queue: [G, E]."
+        },
+        {
+          "n": 6,
+          "text": "Remove G from the queue: goal test succeeds. Path: S-A-D-G."
+        }
+      ],
+      "wrong_step": 3,
+      "error_type": "Wrong node removed (FIFO violated)",
+      "why_wrong": "BFS uses a FIFO queue, so it must remove the oldest node (the front). Removing the newest node makes it behave like depth-first search and loses the shallowest-first guarantee.",
+      "corrected_step": "Remove B from the front of the queue. New nodes: E. Queue: [C, D, E].",
+      "concept": "BFS = FIFO queue; expands level by level; shallowest goal for unit costs.",
+      "viva_followup": "What data structure does BFS use, and what changes if you swap it for a stack?"
+    },
+    {
+      "id": "BH-02",
+      "zone": 4,
+      "algorithm": "Depth-First Search",
+      "difficulty": "medium",
+      "story_intro": "A second log entry from Ra-1's crawler, a depth-first search. Find the corrupted line.",
+      "problem": {
+        "type": "graph",
+        "edges": [
+          "S-A",
+          "S-B",
+          "A-C",
+          "A-D",
+          "C-E",
+          "D-G",
+          "B-G"
+        ],
+        "adjacency": {
+          "S": [
+            "A",
+            "B"
+          ],
+          "A": [
+            "C",
+            "D",
+            "S"
+          ],
+          "B": [
+            "G",
+            "S"
+          ],
+          "C": [
+            "A",
+            "E"
+          ],
+          "D": [
+            "A",
+            "G"
+          ],
+          "E": [
+            "C"
+          ],
+          "G": [
+            "B",
+            "D"
+          ]
+        },
+        "start": "S",
+        "goal": "G"
+      },
+      "rules": "Visit unvisited neighbours in alphabetical order. The stack is the current path from S. Goal test when a node is visited.",
+      "steps": [
+        {
+          "n": 1,
+          "text": "Visit S. Stack (current path): [S]."
+        },
+        {
+          "n": 2,
+          "text": "Visit A. Stack (current path): [S, A]."
+        },
+        {
+          "n": 3,
+          "text": "Visit C. Stack (current path): [S, A, C]."
+        },
+        {
+          "n": 4,
+          "text": "Visit E. Stack (current path): [S, A, E]."
+        },
+        {
+          "n": 5,
+          "text": "Dead end at E: backtrack to A. Stack (current path): [S, A]."
+        },
+        {
+          "n": 6,
+          "text": "Visit D. Stack (current path): [S, A, D]."
+        },
+        {
+          "n": 7,
+          "text": "Visit G. Stack (current path): [S, A, D, G]. Goal test succeeds."
+        }
+      ],
+      "wrong_step": 4,
+      "error_type": "Stack bookkeeping error",
+      "why_wrong": "The stack must hold the whole current path from S to the node just visited. Here C was silently dropped, so the path no longer matches the edges that were actually followed.",
+      "corrected_step": "Visit E. Stack (current path): [S, A, C, E].",
+      "concept": "DFS keeps only the current path (memory linear in depth) and backtracks at dead ends.",
+      "viva_followup": "Why does DFS need so little memory compared with BFS?"
+    },
+    {
+      "id": "BH-03",
+      "zone": 4,
+      "algorithm": "Iterative Deepening Search",
+      "difficulty": "medium",
+      "story_intro": "Ra-1's planner re-ran a depth-limited search with growing limits. One iteration was edited.",
+      "problem": {
+        "type": "tree",
+        "adjacency": {
+          "S": [
+            "A",
+            "B"
+          ],
+          "A": [
+            "C",
+            "D"
+          ],
+          "B": [
+            "E"
+          ],
+          "C": [
+            "F"
+          ],
+          "D": [],
+          "E": [
+            "G"
+          ],
+          "F": [],
+          "G": []
+        },
+        "start": "S",
+        "goal": "G",
+        "depth_of_goal": 3
+      },
+      "rules": "Depth-limited DFS for limits 0, 1, 2, ... Children in alphabetical order. A node at the limit is tested but not expanded. Every visit counts, including repeats across iterations.",
+      "steps": [
+        {
+          "n": 1,
+          "text": "Limit 0: visited [S]. Goal not found."
+        },
+        {
+          "n": 2,
+          "text": "Limit 1: visited [S, A, B]. Goal not found."
+        },
+        {
+          "n": 3,
+          "text": "Limit 2: visited [S, A, C, F, D, B, E]. Goal not found."
+        },
+        {
+          "n": 4,
+          "text": "Limit 3: visited [S, A, C, F, D, B, E, G]. Goal found."
+        },
+        {
+          "n": 5,
+          "text": "Finished at limit 3. Total visits across iterations: 19. Path: S-B-E-G."
+        }
+      ],
+      "wrong_step": 3,
+      "error_type": "Depth limit exceeded",
+      "why_wrong": "With limit 2 the search may visit nodes at depth 0, 1 and 2 only. F is at depth 3, so it cannot appear in this iteration.",
+      "corrected_step": "Limit 2: visited [S, A, C, D, B, E]. Goal not found.",
+      "concept": "IDS = repeated depth-limited DFS; shallowest goal with linear memory.",
+      "viva_followup": "Why is the repeated work in IDS not as wasteful as it looks?"
+    },
+    {
+      "id": "BH-04",
+      "zone": 5,
+      "algorithm": "Steepest-Ascent Hill Climbing",
+      "difficulty": "medium",
+      "story_intro": "Ra-1's optimiser climbs a terrain of scores. Its log claims every move was steepest-ascent.",
+      "problem": {
+        "type": "terrain",
+        "heights": [
+          7,
+          6,
+          5,
+          4,
+          2,
+          6,
+          7,
+          8,
+          9,
+          12,
+          10
+        ],
+        "start_index": 4,
+        "neighbours": "index-1 and index+1"
+      },
+      "rules": "Steepest ascent: move to the HIGHEST neighbour, and only if it is strictly higher than the current state.",
+      "steps": [
+        {
+          "n": 1,
+          "text": "At idx 4 (h=2): neighbours idx 3=4, idx 5=6. Move to idx 3 (h=4) as the steepest uphill move."
+        },
+        {
+          "n": 2,
+          "text": "At idx 3 (h=4): neighbours idx 2=5, idx 4=2. Move to idx 2 (h=5)."
+        },
+        {
+          "n": 3,
+          "text": "At idx 2 (h=5): neighbours idx 1=6, idx 3=4. Move to idx 1 (h=6)."
+        },
+        {
+          "n": 4,
+          "text": "At idx 1 (h=6): neighbours idx 0=7, idx 2=5. Move to idx 0 (h=7)."
+        },
+        {
+          "n": 5,
+          "text": "At idx 0 (h=7): neighbours idx 1=6. No neighbour is strictly higher: stop."
+        },
+        {
+          "n": 6,
+          "text": "Result: stopped at idx 0 (h=7), a local maximum. The global maximum is h=12 at idx 9."
+        }
+      ],
+      "wrong_step": 1,
+      "error_type": "Not the steepest move",
+      "why_wrong": "Both neighbours (idx 3 = 4 and idx 5 = 6) are higher than idx 4 (h=2). Steepest ascent must take the higher one, idx 5. Taking idx 3 sends the climb to a poor local maximum.",
+      "corrected_step": "At idx 4 (h=2): neighbours idx 3=4, idx 5=6. Move to idx 5 (h=6).",
+      "concept": "Steepest ascent is greedy: it takes the best neighbour but can still stop at a local maximum.",
+      "viva_followup": "Name two ways to escape a local maximum in hill climbing."
+    },
+    {
+      "id": "BH-05",
+      "zone": 5,
+      "algorithm": "Greedy Best-First Search",
+      "difficulty": "medium",
+      "story_intro": "A delivery-route log from Ra-1, using straight-line estimates h. One expansion was falsified.",
+      "problem": {
+        "type": "graph",
+        "edges": [
+          "S-A",
+          "S-B",
+          "S-C",
+          "A-D",
+          "B-D",
+          "D-X",
+          "C-G"
+        ],
+        "adjacency": {
+          "S": [
+            "A",
+            "B",
+            "C"
+          ],
+          "A": [
+            "D",
+            "S"
+          ],
+          "B": [
+            "D",
+            "S"
+          ],
+          "C": [
+            "G",
+            "S"
+          ],
+          "D": [
+            "A",
+            "B",
+            "X"
+          ],
+          "X": [
+            "D"
+          ],
+          "G": [
+            "C"
+          ]
+        },
+        "heuristic_h": {
+          "S": 9,
+          "A": 6,
+          "B": 5,
+          "C": 7,
+          "D": 2,
+          "X": 1,
+          "G": 0
+        },
+        "start": "S",
+        "goal": "G"
+      },
+      "rules": "Greedy best-first: always expand the frontier node with the smallest h; ties alphabetical. A node enters the frontier only the first time it is generated. Goal test on expansion.",
+      "steps": [
+        {
+          "n": 1,
+          "text": "Expand S (h=9, lowest h). New: A, B, C. Frontier: [B(5), A(6), C(7)]."
+        },
+        {
+          "n": 2,
+          "text": "Expand A (h=6) as the lowest-h node. New: D. Frontier: [D(2), B(5), C(7)]."
+        },
+        {
+          "n": 3,
+          "text": "Expand D (h=2, lowest h). New: X. Frontier: [X(1), B(5), C(7)]."
+        },
+        {
+          "n": 4,
+          "text": "Expand X (h=1, lowest h). New: none. Frontier: [B(5), C(7)]."
+        },
+        {
+          "n": 5,
+          "text": "Expand B (h=5, lowest h). New: none. Frontier: [C(7)]."
+        },
+        {
+          "n": 6,
+          "text": "Expand C (h=7, lowest h). New: G. Frontier: [G(0)]."
+        },
+        {
+          "n": 7,
+          "text": "Expand G (h=0): goal test succeeds. Path: S-C-G."
+        }
+      ],
+      "wrong_step": 2,
+      "error_type": "Not the lowest-h node",
+      "why_wrong": "After S the frontier is A(6), B(5), C(7). The lowest h is B(5), not A(6), so expanding A contradicts the strategy.",
+      "corrected_step": "Expand B (h=5, lowest h). New: D. Frontier: [D(2), A(6), C(7)].",
+      "concept": "Greedy best-first orders the frontier by h(n) alone, ignoring the cost already paid.",
+      "viva_followup": "Is greedy best-first complete or optimal? Why or why not?"
+    },
+    {
+      "id": "BH-06",
+      "zone": 5,
+      "algorithm": "CSP: Backtracking (Map Colouring)",
+      "difficulty": "medium",
+      "story_intro": "Ra-1 scheduled shared resources by colouring a map. Its log says the solution is valid.",
+      "problem": {
+        "type": "csp",
+        "variables": [
+          "WA",
+          "NT",
+          "SA",
+          "Q",
+          "NSW",
+          "V",
+          "T"
+        ],
+        "domains": {
+          "WA": [
+            "Red",
+            "Green",
+            "Blue"
+          ],
+          "NT": [
+            "Red",
+            "Green",
+            "Blue"
+          ],
+          "SA": [
+            "Red",
+            "Green",
+            "Blue"
+          ],
+          "Q": [
+            "Red",
+            "Green",
+            "Blue"
+          ],
+          "NSW": [
+            "Red",
+            "Green",
+            "Blue"
+          ],
+          "V": [
+            "Red",
+            "Green",
+            "Blue"
+          ],
+          "T": [
+            "Red",
+            "Green",
+            "Blue"
+          ]
+        },
+        "adjacency": {
+          "WA": [
+            "NT",
+            "SA"
+          ],
+          "NT": [
+            "Q",
+            "SA",
+            "WA"
+          ],
+          "SA": [
+            "NSW",
+            "NT",
+            "Q",
+            "V",
+            "WA"
+          ],
+          "Q": [
+            "NSW",
+            "NT",
+            "SA"
+          ],
+          "NSW": [
+            "Q",
+            "SA",
+            "V"
+          ],
+          "V": [
+            "NSW",
+            "SA"
+          ]
+        },
+        "constraint": "Adjacent regions must have different colours"
+      },
+      "rules": "Assign variables in the listed order, trying colours Red, Green, Blue and taking the first one that does not clash with an already-assigned neighbour.",
+      "steps": [
+        {
+          "n": 1,
+          "text": "Assign WA = Red (assigned neighbours: none)."
+        },
+        {
+          "n": 2,
+          "text": "Assign NT = Green (assigned neighbours: WA=Red)."
+        },
+        {
+          "n": 3,
+          "text": "Assign SA = Blue (assigned neighbours: NT=Green, WA=Red)."
+        },
+        {
+          "n": 4,
+          "text": "Assign Q = Green (assigned neighbours: NT=Green, SA=Blue)."
+        },
+        {
+          "n": 5,
+          "text": "Assign NSW = Red (assigned neighbours: Q=Green, SA=Blue)."
+        },
+        {
+          "n": 6,
+          "text": "Assign V = Green (assigned neighbours: NSW=Red, SA=Blue)."
+        },
+        {
+          "n": 7,
+          "text": "Assign T = Red (assigned neighbours: none)."
+        },
+        {
+          "n": 8,
+          "text": "All 7 regions assigned: solution returned."
+        }
+      ],
+      "wrong_step": 4,
+      "error_type": "Constraint violated",
+      "why_wrong": "Q is adjacent to NT, and NT is already Green. Q = Green breaks the constraint NT != Q. The first colour in the list that does not clash is Red.",
+      "corrected_step": "Assign Q = Red: no assigned neighbour has Red. Assignment: WA=Red, NT=Green, SA=Blue, Q=Red.",
+      "concept": "Backtracking checks constraints as it assigns, so a violation should be caught immediately.",
+      "viva_followup": "How does backtracking beat generate-and-test?"
+    },
+    {
+      "id": "BH-07",
+      "zone": 5,
+      "algorithm": "Means-End Analysis",
+      "difficulty": "hard",
+      "story_intro": "Ra-1's maintenance robot planned how to return a backup disk. Check its reasoning chain.",
+      "problem": {
+        "type": "planning",
+        "start": "Robot in Room 2; backup disk in Room 3",
+        "goal": "Backup disk in Room 1",
+        "operators": [
+          "Move(x->y): needs robot in x",
+          "Pickup: needs robot in the disk's room and hands empty",
+          "Putdown: needs robot holding the disk; leaves it in the robot's room"
+        ]
+      },
+      "rules": "Work backwards from the difference: choose an operator that reduces it, then turn its unmet preconditions into sub-goals.",
+      "steps": [
+        {
+          "n": 1,
+          "text": "Difference: the backup disk is in Room 3 but the goal is Room 1. The robot is in Room 2."
+        },
+        {
+          "n": 2,
+          "text": "Operator that reduces the difference: Putdown while the robot is in Room 1."
+        },
+        {
+          "n": 3,
+          "text": "Putdown has two preconditions: the robot holds the disk, and the robot is in Room 1."
+        },
+        {
+          "n": 4,
+          "text": "Sub-goal 'robot holds the disk': Pickup, which needs the robot in Room 3 (where the disk is)."
+        },
+        {
+          "n": 5,
+          "text": "Sub-goal 'robot in Room 3': the robot is in Room 2, so Move(2->3) reduces that difference."
+        },
+        {
+          "n": 6,
+          "text": "Final plan, in execution order: Pickup, Move(2->3), Move(3->1), Putdown."
+        }
+      ],
+      "wrong_step": 6,
+      "error_type": "Plan order violates a precondition",
+      "why_wrong": "Pickup needs the robot to be in Room 3, but the robot starts in Room 2. The sub-goal Move(2->3) must be executed before Pickup.",
+      "corrected_step": "Final plan, in execution order: Move(2->3), Pickup, Move(3->1), Putdown.",
+      "concept": "Means-end analysis picks operators that reduce the difference and recursively satisfies their preconditions.",
+      "viva_followup": "How does means-end analysis differ from forward state-space search?"
+    },
+    {
+      "id": "BH-08",
+      "zone": 5,
+      "algorithm": "Hill Climbing: Plateau",
+      "difficulty": "hard",
+      "story_intro": "Ra-1 reports success. Is its conclusion supported by its own trace?",
+      "problem": {
+        "type": "terrain",
+        "heights": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          6,
+          6,
+          6,
+          8,
+          10,
+          7,
+          3
+        ],
+        "start_index": 0,
+        "neighbours": "index-1 and index+1"
+      },
+      "rules": "Simple hill climbing: check the right neighbour first, then the left; move only to a strictly higher neighbour.",
+      "steps": [
+        {
+          "n": 1,
+          "text": "At idx 0 (h=1): neighbours idx 1=2. Move to idx 1 (h=2)."
+        },
+        {
+          "n": 2,
+          "text": "At idx 1 (h=2): neighbours idx 0=1, idx 2=3. Move to idx 2 (h=3)."
+        },
+        {
+          "n": 3,
+          "text": "At idx 2 (h=3): neighbours idx 1=2, idx 3=4. Move to idx 3 (h=4)."
+        },
+        {
+          "n": 4,
+          "text": "At idx 3 (h=4): neighbours idx 2=3, idx 4=6. Move to idx 4 (h=6)."
+        },
+        {
+          "n": 5,
+          "text": "At idx 4 (h=6): neighbours idx 3=4, idx 5=6. No neighbour is strictly higher: stop."
+        },
+        {
+          "n": 6,
+          "text": "Result: stopped at idx 4 (h=6). This is the global maximum, so the search is complete."
+        }
+      ],
+      "wrong_step": 6,
+      "error_type": "Wrong conclusion",
+      "why_wrong": "Equal-height neighbours are not strictly higher, so the climb stops on a flat shoulder (idx 4 to 7). Taller ground exists at idx 9 (h=10), so this is not the global maximum.",
+      "corrected_step": "Result: stopped at idx 4 (h=6). This is a plateau (flat shoulder), not a peak. Global maximum is h=10 at idx 9.",
+      "concept": "Plateau: flat region where greedy moves stall; fixes include sideways moves (with a cap) and random restarts.",
+      "viva_followup": "What does allowing a limited number of sideways moves change here?"
+    }
+  ],
+  "interrogation": [
+    {
+      "id": "IR-01",
+      "zone": 1,
+      "difficulty": "easy",
+      "concept": "Turing Test (text-only)",
+      "story_intro": "The rival lab posted a fake witness to the night of the tampering. Two chat windows are open. One is a human on the lab's night shift, the other is a bot.",
+      "transcript": [
+        {
+          "speaker": "Interrogator",
+          "text": "What is 4,873 x 6,291? Answer as fast as you can."
+        },
+        {
+          "speaker": "A",
+          "text": "Ha, no chance in my head. Somewhere around thirty million? Give me a calculator."
+        },
+        {
+          "speaker": "B",
+          "text": "30,656,043."
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "What did you have for breakfast?"
+        },
+        {
+          "speaker": "A",
+          "text": "Cold coffee and half a samosa. The canteen ran out of idli again."
+        },
+        {
+          "speaker": "B",
+          "text": "Just toast and tea. Breakfast is the most important meal of the day, so I never skip it!"
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "Tell me about a time the lab network went down."
+        },
+        {
+          "speaker": "A",
+          "text": "Last March, mid-demo. Someone had kicked the switch under the desk. We all just stood there in silence."
+        },
+        {
+          "speaker": "B",
+          "text": "Network outages can be frustrating. A good approach is to restart the router and check all the cables."
+        }
+      ],
+      "bot": "B",
+      "human": "A",
+      "tells": [
+        "Instant, exact multiplication that no person does in their head",
+        "A generic slogan instead of a personal detail",
+        "Textbook advice instead of a lived story"
+      ],
+      "verdict": "B is the bot. Passing the basic Turing Test means answering like a person over text only, so a perfect calculator reply is a giveaway.",
+      "concept_check": {
+        "question": "The interrogator and the suspects communicate only by typed text. Which test is this?",
+        "options": [
+          "A. The basic Turing Test",
+          "B. The Total Turing Test",
+          "C. A rational-agent benchmark",
+          "D. A CSP solver"
+        ],
+        "answer": "A",
+        "explanation": "The basic Turing Test is text-only. It needs natural language processing, knowledge representation, automated reasoning and machine learning, but no vision or robotics."
+      },
+      "viva_followup": "Which four capabilities must a program have to pass the basic Turing Test?"
+    },
+    {
+      "id": "IR-02",
+      "zone": 1,
+      "difficulty": "medium",
+      "concept": "Total Turing Test",
+      "story_intro": "The second witness claims to have been physically in the server room. This interview includes a video feed and a hatch for passing objects.",
+      "transcript": [
+        {
+          "speaker": "Interrogator",
+          "text": "I'm holding something up to the camera. What is it?"
+        },
+        {
+          "speaker": "stage",
+          "text": "[Video: a paper aeroplane with one crooked wing]"
+        },
+        {
+          "speaker": "A",
+          "text": "It looks like a folded document."
+        },
+        {
+          "speaker": "B",
+          "text": "A paper plane. Left wing is bent, so it'll veer off."
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "Please pass the red marker through the hatch. Cap off."
+        },
+        {
+          "speaker": "A",
+          "text": "Of course, one moment."
+        },
+        {
+          "speaker": "stage",
+          "text": "[30 seconds pass. Nothing comes through the hatch from A.]"
+        },
+        {
+          "speaker": "B",
+          "text": "Here you go."
+        },
+        {
+          "speaker": "stage",
+          "text": "[A red marker, cap off, slides through B's hatch.]"
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "Which of you was at the server rack that night?"
+        },
+        {
+          "speaker": "A",
+          "text": "I was there from about nine, checking the rack."
+        },
+        {
+          "speaker": "B",
+          "text": "Not me. I was in the lab on the second floor."
+        }
+      ],
+      "bot": "A",
+      "human": "B",
+      "tells": [
+        "Described the aeroplane only vaguely as 'a folded document'",
+        "Said it would pass the marker but never did",
+        "Fluent text that cannot back up its claim of being at the rack"
+      ],
+      "verdict": "A is the bot. It handled the text but failed the two tasks that need a camera and a body.",
+      "concept_check": {
+        "question": "Which two capabilities does the Total Turing Test add to the basic test?",
+        "options": [
+          "A. Computer vision and robotics",
+          "B. Search and planning",
+          "C. Learning and reasoning",
+          "D. Speech synthesis and logic"
+        ],
+        "answer": "A",
+        "explanation": "The Total Turing Test adds a video signal (needing computer vision) and the chance to pass physical objects (needing robotics)."
+      },
+      "viva_followup": "Why might a text-only Turing Test be considered too narrow?"
+    },
+    {
+      "id": "IR-03",
+      "zone": 1,
+      "difficulty": "medium",
+      "concept": "Knowledge representation and reasoning",
+      "story_intro": "Two staff members describe their shift on the night Ra-1 was corrupted. One is a bot with a prepared story. Listen for consistency.",
+      "transcript": [
+        {
+          "speaker": "Interrogator",
+          "text": "What time did you start work that day?"
+        },
+        {
+          "speaker": "A",
+          "text": "Around ten. I do late shifts, so I'm never in before noon."
+        },
+        {
+          "speaker": "B",
+          "text": "I work nights, so I'm never in the building before six in the evening."
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "Who else was around?"
+        },
+        {
+          "speaker": "A",
+          "text": "Just Priya from QA, she was finishing a test run."
+        },
+        {
+          "speaker": "B",
+          "text": "The whole morning team was there. Priya from QA was at the next desk."
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "So what did you see when you arrived?"
+        },
+        {
+          "speaker": "A",
+          "text": "The lights were on in the lab and Priya's screen was open on the logs."
+        },
+        {
+          "speaker": "B",
+          "text": "When I got in at nine, the corridor was empty and the access panel was blinking."
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "Earlier you said you are never in before six in the evening."
+        },
+        {
+          "speaker": "B",
+          "text": "That is correct. I am never in before six in the evening. I arrived at nine in the morning."
+        }
+      ],
+      "bot": "B",
+      "human": "A",
+      "tells": [
+        "B stated a fact (never in before six in the evening) and later contradicted it",
+        "B kept both statements without noticing the conflict",
+        "A's account stayed consistent from start to finish"
+      ],
+      "verdict": "B is the bot. It did not store and reason over what it had already said.",
+      "concept_check": {
+        "question": "Which capability does B's contradiction most directly show to be missing or weak?",
+        "options": [
+          "A. Knowledge representation and reasoning",
+          "B. Computer vision",
+          "C. Robotics",
+          "D. Natural language generation only"
+        ],
+        "answer": "A",
+        "explanation": "To stay consistent a system must store what it has been told or has said (knowledge representation) and use it to draw conclusions (automated reasoning)."
+      },
+      "viva_followup": "What does the knowledge representation component of an intelligent agent do?"
+    },
+    {
+      "id": "IR-04",
+      "zone": 1,
+      "difficulty": "hard",
+      "concept": "Acting humanly vs acting rationally",
+      "story_intro": "The rival lab's bot was told to 'look human'. It was tuned to make typing mistakes. Compare the quality of the mistakes, not just the answers.",
+      "transcript": [
+        {
+          "speaker": "Interrogator",
+          "text": "In one sentence, why did Ra-1 fail its safety check?"
+        },
+        {
+          "speaker": "A",
+          "text": "Its reward was wrong, so it optimised the wrong thing. Sorry, ugly sentence, but that's basically it."
+        },
+        {
+          "speaker": "B",
+          "text": "Its performance meassure rewarded speed over safety, so it chose fast actions."
+        },
+        {
+          "speaker": "stage",
+          "text": "[Reply times: A took 11 seconds. B took 2 seconds.]"
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "And what should the measure have rewarded?"
+        },
+        {
+          "speaker": "A",
+          "text": "Safe completions, honestly. Hmm, and it should punish shortcuts. I'd have to check the spec to be precise."
+        },
+        {
+          "speaker": "B",
+          "text": "The measure should have rewarded safty and correct task completion, not just throughput."
+        },
+        {
+          "speaker": "stage",
+          "text": "[Reply times: A took 19 seconds. B took 2 seconds.]"
+        },
+        {
+          "speaker": "Interrogator",
+          "text": "Last one. Give me the spelling of 'necessary'."
+        },
+        {
+          "speaker": "A",
+          "text": "n-e-c-e-s-s-a-r-y. I always have to stop and count the s's."
+        },
+        {
+          "speaker": "B",
+          "text": "n-e-c-e-s-s-a-r-y. My typing is not always acurate."
+        }
+      ],
+      "bot": "B",
+      "human": "A",
+      "tells": [
+        "Exactly one typo per message, always in the fourth word or later 'technical' term",
+        "Perfectly spelled the word it was asked to spell, so its mistakes are for show",
+        "Replies arrive in exactly 2 seconds no matter how hard the question is"
+      ],
+      "verdict": "B is the bot. It imitates human flaws on purpose, which is a good way to act humanly but not how a system acts rationally.",
+      "concept_check": {
+        "question": "B was built to imitate human behaviour, including faking typos. Which of the four approaches to AI does that follow?",
+        "options": [
+          "A. Thinking humanly",
+          "B. Thinking rationally",
+          "C. Acting humanly",
+          "D. Acting rationally"
+        ],
+        "answer": "C",
+        "explanation": "Imitating human behaviour so that people cannot tell the difference is the acting-humanly (Turing Test) approach. A rational agent would simply aim to maximise its performance measure, with no reason to fake mistakes."
+      },
+      "viva_followup": "Why is acting rationally a more general goal than acting humanly?"
+    }
+  ]
+}

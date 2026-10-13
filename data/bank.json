@@ -1,0 +1,1698 @@
+[
+  {
+    "id": "Z1-01",
+    "zone": 1,
+    "topic": "Turing Test",
+    "type": "MCQ",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": false,
+    "question": "A text-only chat system is judged by whether a human interrogator can tell its written replies from a person's. Which capability is NOT needed to pass this basic Turing Test?",
+    "options": [
+      "A. Natural language processing",
+      "B. Computer vision",
+      "C. Knowledge representation",
+      "D. Automated reasoning"
+    ],
+    "answer": "B",
+    "explanation": "The basic test is text-only, so it needs language processing, knowledge representation (to store what it knows), reasoning (to use it) and learning. Vision is needed only in the Total Turing Test. Option C is the best distractor because the system must hold knowledge to answer questions.",
+    "hint": "Look at the channel of communication. What does the interrogator actually receive?",
+    "viva_followup": "What does the Total Turing Test add? It adds a video signal and the chance to pass physical objects, so it also needs computer vision and robotics.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.1 §1.1.1"
+  },
+  {
+    "id": "Z1-02",
+    "zone": 1,
+    "topic": "Rationality vs Omniscience",
+    "type": "TF",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": false,
+    "question": "True or False: A delivery drone uses the best available forecast and takes off. A sudden, unforecastable gust crashes it. Therefore the drone acted irrationally.",
+    "answer": "False",
+    "explanation": "Rationality maximizes expected performance given the percept sequence and built-in knowledge. It does not maximize actual performance, which would need omniscience. The crash came from information the drone could not have had.",
+    "hint": "Ask whether the drone could have known about the gust. What does 'rational' promise: expected or actual outcome?",
+    "viva_followup": "Distinguish rationality from perfection. Rationality maximizes expected performance; perfection maximizes actual performance and would require knowing the future.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.2 §2.2.1"
+  },
+  {
+    "id": "Z1-03",
+    "zone": 1,
+    "topic": "Rational Agent Definition",
+    "type": "FIB",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": false,
+    "question": "A rational agent selects the action expected to maximize its ______ measure, given its percept sequence and built-in knowledge. The abstract mapping from percept sequences to actions is called the agent ______.",
+    "answer": "Blank 1: performance. Blank 2: function.",
+    "explanation": "The performance measure judges sequences of environment states. The agent function is the abstract mapping, while the agent program is its concrete implementation.",
+    "hint": "The first blank is what the designer uses to score how well the agent did. The second is the abstract mapping, as opposed to the 'program'.",
+    "viva_followup": "How does the agent function differ from the agent program? The function is an abstract mapping from percept sequences to actions. The program is the code that implements it on a physical architecture.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.2 §2.1 and §2.2.1"
+  },
+  {
+    "id": "Z1-04",
+    "zone": 1,
+    "topic": "Designing Performance Measures",
+    "type": "MCQ",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A university helpdesk bot is rewarded for the number of tickets it closes per day. Which behaviour would a bot maximizing this measure most plausibly adopt?",
+    "options": [
+      "A. Closing tickets quickly, even if the student's problem is unsolved",
+      "B. Asking clarifying questions before replying",
+      "C. Spending extra time to confirm each fix worked",
+      "D. Refusing new tickets to keep its quality high"
+    ],
+    "answer": "A",
+    "explanation": "A rational agent gets what the measure rewards, so closing tickets prematurely scores best. The measure should reflect what we actually want, such as problems resolved and satisfied students. Option C is wrong because the extra checking lowers the closed-ticket count.",
+    "hint": "Imagine the bot only cares about the score you gave it. What is the cheapest way to raise it?",
+    "viva_followup": "Give a better performance measure for this bot. Reward verified resolutions and student satisfaction, and penalize reopened tickets. Design the measure from the outcome you want in the environment, not from how you think the agent should behave.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.2 §2.2"
+  },
+  {
+    "id": "Z1-05",
+    "zone": 1,
+    "topic": "Agent Types",
+    "type": "MATCH",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": false,
+    "question": "Match each agent type (left) with its defining feature (right).",
+    "left": [
+      "1. Simple reflex agent",
+      "2. Model-based reflex agent",
+      "3. Goal-based agent",
+      "4. Utility-based agent",
+      "5. Learning agent"
+    ],
+    "right": [
+      "A. Uses a critic's feedback against a fixed performance standard to improve its performance element",
+      "B. Chooses actions that maximize expected utility, trading off conflicting goals such as speed and safety",
+      "C. Keeps internal state, built from a model of how the world evolves, to cope with unseen parts of the world",
+      "D. Fires a condition-action rule using only the current percept",
+      "E. Considers sequences of actions (search/planning) to reach a desired state"
+    ],
+    "answer": "1-D, 2-C, 3-E, 4-B, 5-A",
+    "explanation": "Simple reflex agents ignore percept history. Model-based agents add internal state. Goal-based agents add goals and look ahead. Utility-based agents add a utility function to compare outcomes. Learning agents add a critic and learning element.",
+    "hint": "Order the types by what each adds to the previous design: state, then goals, then utility, then learning.",
+    "viva_followup": "Why does a simple reflex agent fail under partial observability? It decides from the current percept only, so it can loop forever when that percept does not reveal the relevant state.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.2 §2.4.2-2.4.6"
+  },
+  {
+    "id": "Z1-06",
+    "zone": 1,
+    "topic": "Simple Reflex Agent Limits",
+    "type": "AR",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": false,
+    "question": "Assertion (A): A deterministic simple reflex robot vacuum with only a dirt sensor (no location sensor) can fail forever in a two-room world. Reason (R): It decides from the current percept alone and keeps no internal state, so on the percept 'Clean' it always chooses the same move.",
+    "options": [
+      "A. Both A and R are true, and R explains A",
+      "B. Both A and R are true, but R does not explain A",
+      "C. A is true, R is false",
+      "D. A is false, R is true"
+    ],
+    "answer": "A",
+    "explanation": "If it always moves Left on 'Clean', it never leaves room A when it starts there, and the same holds for Right in room B. Both statements are true and R is exactly the cause. Randomizing the move on 'Clean' can break the loop.",
+    "hint": "Work through the agent starting in each room. What does it perceive after it finishes cleaning?",
+    "viva_followup": "Name two ways to fix this agent. Add a location sensor or internal state so it becomes model-based. Alternatively, randomize the move on 'Clean'; the agent then reaches the other room in an average of two steps.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.2 §2.4.2"
+  },
+  {
+    "id": "Z1-07",
+    "zone": 1,
+    "topic": "Learning Agents, Autonomy",
+    "type": "SCENARIO",
+    "difficulty": "hard",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A mail provider's spam filter relies on hand-written rules from the day it was deployed. Its catch rate drops steadily as spammers change tactics. Users have 'Report spam' and 'Not spam' buttons. (a) Which property of a rational agent is the filter lacking? (b) Which component of a general learning agent should use the button clicks, and which should judge them? (c) Name one thing besides 'spam caught' that the performance measure must include.",
+    "answer": "(a) Autonomy/learning: the filter relies on its designer's prior knowledge instead of its own percepts. (b) The critic interprets the clicks against a fixed performance standard, and the learning element uses that feedback to modify the performance element (the classifier). (c) A penalty for legitimate mail wrongly filed as spam (false positives).",
+    "explanation": "A rational agent should learn to compensate for incomplete or outdated prior knowledge. The critic tells the learning element how well the agent is doing against a fixed standard. A measure of 'spam caught' alone would reward blocking everything.",
+    "hint": "Ask who or what changes as spammers adapt. The fixed rules cannot. What element is responsible for making improvements?",
+    "viva_followup": "What does the problem generator do in a learning agent? It suggests exploratory actions that give new, informative experiences, for example occasionally showing a borderline email so users can label it.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.1 §1.4, Ch.2 §2.2.2 and §2.4.6"
+  },
+  {
+    "id": "Z1-08",
+    "zone": 1,
+    "topic": "Four Approaches to AI",
+    "type": "SCENARIO",
+    "difficulty": "easy",
+    "real_world": true,
+    "search_problem": false,
+    "question": "Classify each system into one of the four approaches: thinking humanly, thinking rationally, acting humanly, acting rationally. (i) A chatbot judged on whether judges can tell it from a person. (ii) A problem solver validated by matching its step-by-step reasoning to what people say aloud while solving the same puzzle. (iii) A theorem prover built on formal logic and syllogisms. (iv) A warehouse robot that picks the action with the best expected outcome for throughput.",
+    "answer": "(i) Acting humanly (Turing Test approach). (ii) Thinking humanly (cognitive modelling). (iii) Thinking rationally ('laws of thought', logic). (iv) Acting rationally (rational agent approach).",
+    "explanation": "Each system is classified by what it is measured against (humans or an ideal) and by what it models (thought or behaviour). The course adopts the rational-agent view, acting rationally.",
+    "hint": "For each system, ask two questions. Is it measured against humans or against an ideal? Does it model thought processes or behaviour?",
+    "viva_followup": "Why is the rational-agent approach the most general? Rational action can exist without provably correct inference, such as a reflex, and the approach is more amenable to scientific development than human-based approaches.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.1 §1.1"
+  },
+  {
+    "id": "Z1-09",
+    "zone": 1,
+    "topic": "Table-Driven Agent Size",
+    "type": "PROBLEM",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A smart thermostat has 3 possible percepts (Cold, OK, Hot). Its designer proposes a table-driven agent indexed by the full percept sequence, for a lifetime of T = 4 time steps. (a) How many table entries are needed? (b) How many condition-action rules does a simple reflex thermostat need instead?",
+    "answer": "(a) Sum over t = 1 to 4 of 3^t = 3 + 9 + 27 + 81 = 120 entries. (b) 3 rules, one per percept (for example Cold -> heat on, OK -> do nothing, Hot -> cool on).",
+    "explanation": "A table indexed by percept sequences needs one entry for every sequence of length 1 to T, which is the sum of |P|^t. A reflex agent ignores history, so it needs only |P| entries.",
+    "hint": "Count the possible percept sequences of length 1, then length 2, then 3 and 4. Add them up.",
+    "viva_followup": "Give four reasons table-driven agents fail in practice. The table is too big to store, too big for the designer to build, impossible for an agent to learn entry by entry, and gives no guidance on how to fill the entries.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.2 §2.4.1"
+  },
+  {
+    "id": "Z1-10",
+    "zone": 1,
+    "topic": "Rationality Depends on Context",
+    "type": "MCQ",
+    "difficulty": "hard",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A robot vacuum in a two-room home scores +1 per clean room per time step and -1 per move. Dirt never reappears, and both rooms are now clean. Which behaviour is rational?",
+    "options": [
+      "A. Keep alternating between rooms to check for dirt",
+      "B. Dump the collected dirt and clean it again to earn more points",
+      "C. Return to the first room each step to re-verify it is clean",
+      "D. Stop moving and do nothing"
+    ],
+    "answer": "D",
+    "explanation": "With a movement penalty and no new dirt, every extra move lowers the score and gains nothing, so doing nothing maximizes expected performance. The same alternating agent is rational when moves are free, or when dirt can reappear. Option B is wrong because the measure rewards clean rooms, not dirt collected.",
+    "hint": "Compare the score from moving with the score from staying put. Which assumption changed from the textbook case of an agent that checks both squares forever?",
+    "viva_followup": "How does the rational action change if clean squares can become dirty again? The agent should occasionally re-check and re-clean them, because the percepts could then reveal dirt and the expected gain outweighs the move penalty.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.2 §2.2.1"
+  },
+  {
+    "id": "Z2-01",
+    "zone": 2,
+    "topic": "PEAS Description",
+    "type": "SCENARIO",
+    "difficulty": "easy",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A hospital deploys a medical diagnosis assistant that asks the patient questions, suggests tests and proposes diagnoses. Write its PEAS description (Performance measure, Environment, Actuators, Sensors).",
+    "answer": "P: healthy patient, reduced costs. E: patient, hospital, staff. A: display of questions, tests, diagnoses, treatments, referrals. S: keyboard entry of symptoms, findings and the patient's answers.",
+    "explanation": "PEAS fixes the task environment before any agent is designed. Performance should reflect what is wanted (patient health, cost), not how the agent behaves.",
+    "hint": "Separate what the agent is judged on (P), what it lives in (E), what it can do (A) and what it can perceive (S).",
+    "viva_followup": "Why must PEAS be specified first? The task environment determines which agent design is appropriate; a vague performance measure leads to the wrong behaviour.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I-II; R&N 3e Ch.2 §2.3.1, Fig 2.5"
+  },
+  {
+    "id": "Z2-02",
+    "zone": 2,
+    "topic": "Properties of Task Environments",
+    "type": "SCENARIO",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": false,
+    "question": "Classify each task on six properties: observable (fully/partially), agents (single/multi), deterministic/stochastic, episodic/sequential, static/dynamic, discrete/continuous. Tasks: (i) a Sudoku solver, (ii) online poker, (iii) a self-driving taxi in city traffic.",
+    "answer": "(i) Sudoku: fully observable, single-agent, deterministic, sequential, static, discrete. (ii) Poker: partially observable (hidden cards), multi-agent, stochastic (shuffle), sequential, static, discrete. (iii) Taxi: partially observable, multi-agent, stochastic, sequential, dynamic, continuous.",
+    "explanation": "Poker differs from Sudoku in hidden information, other players and chance. The taxi differs from poker in that the world changes while it thinks and its state is continuous.",
+    "hint": "Ask what the agent can see, who else acts, whether outcomes are certain, whether earlier choices matter, whether the world moves while it thinks, and whether values are countable.",
+    "viva_followup": "Which of these three is the hardest class of environment? The taxi: partially observable, multi-agent, stochastic, sequential, dynamic and continuous.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.2 §2.3.2, Fig 2.6"
+  },
+  {
+    "id": "Z2-03",
+    "zone": 2,
+    "topic": "Episodic vs Sequential",
+    "type": "MCQ",
+    "difficulty": "easy",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A camera agent on an assembly line labels each part 'defective' or 'OK'. Its decision on one part does not affect the next part. Which property does this illustrate?",
+    "options": [
+      "A. Sequential",
+      "B. Semidynamic",
+      "C. Episodic",
+      "D. Stochastic"
+    ],
+    "answer": "C",
+    "explanation": "Each decision is an atomic episode independent of earlier ones, so no lookahead is needed. Sequential environments (option A), such as chess, are those where current decisions affect future ones.",
+    "hint": "Does labelling part 5 change anything about part 6?",
+    "viva_followup": "Is a chess tournament episodic or sequential? Each game is an episode, but decisions within one game are sequential.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.2 §2.3.2"
+  },
+  {
+    "id": "Z2-04",
+    "zone": 2,
+    "topic": "Single vs Multi-agent",
+    "type": "MCQ",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": false,
+    "question": "Agent A is deciding how to act, and entity B is part of its environment. According to the textbook, when must A treat B as an agent rather than as an object?",
+    "options": [
+      "A. When B's behaviour is best described as maximizing a performance measure that depends on A's behaviour",
+      "B. Whenever B moves",
+      "C. Whenever B is a human being",
+      "D. Whenever B is a program running on a computer"
+    ],
+    "answer": "A",
+    "explanation": "B must be treated as an agent when its behaviour is best described as maximizing a performance measure whose value depends on A's behaviour. A falling leaf or a wave obeys physics only. Option B is wrong because merely moving does not make something an agent.",
+    "hint": "Think about leaves blowing in the wind versus a chess opponent. What is the difference in what they 'want'?",
+    "viva_followup": "Is a taxi's environment competitive or cooperative? It is partially cooperative, since avoiding collisions helps all drivers, and partially competitive, since only one car can take a parking space.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.2 §2.3.2"
+  },
+  {
+    "id": "Z2-05",
+    "zone": 2,
+    "topic": "Known vs Observable",
+    "type": "TF",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": false,
+    "question": "True or False: If an agent knows all the rules of its environment, the environment must be fully observable.",
+    "answer": "False",
+    "explanation": "'Known' describes the agent's knowledge of the rules; 'observable' describes whether sensors reveal the full state. In solitaire you know the rules but cannot see the face-down cards, and in a new video game you may see the whole screen but not know what the buttons do.",
+    "hint": "Think of a card game you know perfectly. Can you see every card?",
+    "viva_followup": "Give an example of an unknown but fully observable environment. A new video game where the screen shows everything but you do not yet know what each button does.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.2 §2.3.2"
+  },
+  {
+    "id": "Z2-06",
+    "zone": 2,
+    "topic": "Taxi Environment Classification",
+    "type": "FIB",
+    "difficulty": "easy",
+    "real_world": true,
+    "search_problem": false,
+    "question": "Complete the textbook classification of automated taxi driving: partially observable, multiagent, ______, sequential, dynamic, ______.",
+    "answer": "Blank 1: stochastic. Blank 2: continuous.",
+    "explanation": "Traffic cannot be predicted exactly and tyres can burst, so it is stochastic. Speed, position and steering angle sweep smoothly through values, so state, time and actions are continuous.",
+    "hint": "Can you predict other drivers exactly? Do speeds come in fixed steps?",
+    "viva_followup": "What changes in design if the environment is dynamic? The agent must keep sensing and acting, since deliberating counts as doing nothing while the world moves on.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.2 §2.3.2, Fig 2.6"
+  },
+  {
+    "id": "Z2-07",
+    "zone": 2,
+    "topic": "Matching Environments",
+    "type": "MATCH",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": false,
+    "question": "Match each task environment (left) with the property that best describes it (right).",
+    "left": [
+      "1. Crossword puzzle",
+      "2. Backgammon",
+      "3. Poker",
+      "4. Chess with a clock",
+      "5. Taxi driving"
+    ],
+    "right": [
+      "A. Fully observable but stochastic (dice)",
+      "B. Dynamic and continuous",
+      "C. Static, single-agent and deterministic",
+      "D. Semidynamic: the board waits but the score depends on time",
+      "E. Partially observable (hidden cards) and stochastic"
+    ],
+    "answer": "Crossword-C, Backgammon-A, Poker-E, Chess with a clock-D, Taxi driving-B",
+    "explanation": "Backgammon shows the full board but dice make it stochastic. Poker hides cards. A chess clock makes the score time-dependent while the board stays still, which is semidynamic. A crossword is static, single-agent and deterministic.",
+    "hint": "Ask whether chance, hidden information, or time is the key feature of each task.",
+    "viva_followup": "Why is chess with a clock semidynamic and not dynamic? The environment itself does not change while the agent thinks, but the agent's performance score does.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.2 §2.3.2, Fig 2.6"
+  },
+  {
+    "id": "Z2-08",
+    "zone": 2,
+    "topic": "Known vs Unknown Environment",
+    "type": "SCENARIO",
+    "difficulty": "hard",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A company moves its self-driving taxi software from the roads it was built for to a country with unfamiliar traffic laws, signs and road layouts. Sensors, vehicle and task stay the same. (a) Which of the six properties change? (b) Which distinction does change? (c) What does this demand of the agent, and how does it relate to autonomy?",
+    "answer": "(a) None: it is still partially observable, multi-agent, stochastic, sequential, dynamic and continuous. (b) Known vs unknown: the agent's knowledge of the 'laws' (outcomes of actions) is now incomplete. (c) The agent must learn how this environment works, which is why a rational agent should be autonomous rather than rely only on prior designer knowledge.",
+    "explanation": "The six properties describe the task. 'Known/unknown' describes what the agent understands of the rules.",
+    "hint": "Think about what stayed the same (the task) and what changed (what the agent can assume).",
+    "viva_followup": "What is the textbook example of an agent without autonomy? The sphex wasp, which repeats its plan unchanged even when the caterpillar is moved, so it cannot learn that its innate plan is failing.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.2 §2.2.2 and §2.3.2"
+  },
+  {
+    "id": "Z3-01",
+    "zone": 3,
+    "topic": "Water Jug Formulation",
+    "type": "PROBLEM",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": true,
+    "question": "You have a 4-litre jug and a 3-litre jug and unlimited water. State = (x, y) litres in the 4L and 3L jugs. Operators: fill a jug, empty a jug, pour one into the other until full or empty. Initial state (0,0); goal: exactly 2 L in the 4L jug, i.e. any state (2, y); each operator costs 1. What is the minimum number of operators, and give one optimal sequence?",
+    "answer": "6 operators, e.g. (0,0) -> (4,0) -> (1,3) -> (1,0) -> (0,1) -> (4,1) -> (2,3).",
+    "explanation": "A breadth-first search over the 4x3 grid of states shows no goal appears before depth 6. The sequence fills the 4L jug, pours into the 3L jug, empties it, moves the remaining 1 L across, refills the 4L jug and tops up the 3L jug, leaving 2 L in the 4L jug.",
+    "hint": "Track only the 4L jug's contents. Which amounts can you reach by repeated pouring of 3L-sized portions?",
+    "viva_followup": "Name the four parts of a problem formulation for this puzzle. Initial state (0,0), operators (fill, empty, pour), goal test (x = 2) and path cost (1 per operator).",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit I-II; R&N 3e Ch.3 §3.1-3.2; Rich & Knight Ch.2"
+  },
+  {
+    "id": "Z3-02",
+    "zone": 3,
+    "topic": "Missionaries and Cannibals",
+    "type": "PROBLEM",
+    "difficulty": "hard",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Three missionaries and three cannibals must cross a river in a boat holding at most two people. On neither bank may missionaries be outnumbered by cannibals unless there are no missionaries there. Each crossing costs 1. What is the minimum number of crossings?",
+    "answer": "11 crossings.",
+    "explanation": "Breadth-first search over states (M on left, C on left, boat side) finds the shallowest goal at depth 11. A representative solution is (3,3,L), (3,1,R), (3,2,L), (3,0,R), (3,1,L), (1,1,R), (2,2,L), (0,2,R), (0,3,L), (0,1,R), (1,1,L), (0,0,R).",
+    "hint": "Which states are illegal? Moving two cannibals first is safe, but who must bring the boat back?",
+    "viva_followup": "Why does the optimal solution have to move people back across the river at times? Some crossings are returns, because carrying everyone forward at once would leave missionaries outnumbered on a bank.",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit I; R&N 3e Ch.3 Ex. 3.9; Rich & Knight Ch.2"
+  },
+  {
+    "id": "Z3-03",
+    "zone": 3,
+    "topic": "8-Puzzle Formulation",
+    "type": "SCENARIO",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Formulate the 8-puzzle as a search problem. (a) Initial state, operators, goal test and path cost. (b) How many operators apply when the blank is in a corner, on an edge and in the centre? (c) Roughly how many states are reachable from any given state?",
+    "answer": "(a) Initial state: any given 3x3 arrangement of tiles 1-8 and a blank. Operators: move the blank Up/Down/Left/Right (4 operators, where legal). Goal test: tiles are in the target configuration. Path cost: 1 per move. (b) 2, 3 and 4 operators. (c) 9!/2 = 181,440 reachable states.",
+    "explanation": "Defining moves as sliding the blank, rather than sliding a particular tile, keeps the operator set to 4. Only half of the 9! = 362,880 arrangements are reachable, because they split into two disjoint sets.",
+    "hint": "Think of which squares the blank can swap with when it sits at the corner, edge and middle of the grid.",
+    "viva_followup": "Why are only half of the 9! arrangements reachable? The states divide into two disjoint classes (by permutation parity) and no move sequence crosses between them.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.3 §3.2.1"
+  },
+  {
+    "id": "Z3-04",
+    "zone": 3,
+    "topic": "Components of a Problem",
+    "type": "MCQ",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": true,
+    "question": "In formulating a Rubik's cube solver as a search problem, the 18 legal face turns (6 faces x 3 turn types) from any cube position correspond to which component of the formulation?",
+    "options": [
+      "A. Initial state",
+      "B. Operators (the set of actions available)",
+      "C. Path cost",
+      "D. Goal test"
+    ],
+    "answer": "B",
+    "explanation": "The set of actions available in each state is the operator or successor definition. The goal test checks whether all faces are uniform, the initial state is the scrambled cube, and path cost counts moves. Option C is wrong because path cost assigns a price to each move, not the moves themselves.",
+    "hint": "Which component answers 'what can I do from here?'",
+    "viva_followup": "What would be a reasonable goal test and path cost? Goal test: every face is a single colour. Path cost: number of turns.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.3 §3.1"
+  },
+  {
+    "id": "Z3-05",
+    "zone": 3,
+    "topic": "Problem Characteristics",
+    "type": "MCQ",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A chess engine and an 8-puzzle solver both make moves. Which statement about problem characteristics is correct?",
+    "options": [
+      "A. Chess is ignorable, because losing pieces can be disregarded",
+      "B. The 8-puzzle is irrecoverable, because moves cannot be undone",
+      "C. Chess is irrecoverable, whereas the 8-puzzle is recoverable",
+      "D. Both are ignorable, because the final state is all that matters"
+    ],
+    "answer": "C",
+    "explanation": "Chess is irrecoverable: a bad move cannot be undone, so the program must plan carefully. The 8-puzzle is recoverable, because a mistaken move can be reversed. Theorem proving is ignorable: steps that did not help can simply be ignored. Option B is the best distractor because it reverses the 8-puzzle and chess labels.",
+    "hint": "Ask whether you can take a move back in each game.",
+    "viva_followup": "Give an example of an ignorable problem. Theorem proving: a lemma that turned out unhelpful can be ignored and the proof continues.",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit I; Rich & Knight Ch.2 §2.3 (problem characteristics)"
+  },
+  {
+    "id": "Z3-06",
+    "zone": 3,
+    "topic": "Production Systems",
+    "type": "TF",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": false,
+    "question": "True or False: In a production system, the control strategy decides which applicable rule to fire when several rules match the current database.",
+    "answer": "True",
+    "explanation": "A production system has a set of rules, a global database (state) and a control strategy. The rules say what can be done; the control strategy chooses among those that match, and records or avoids repeated states.",
+    "hint": "Rules propose; who disposes?",
+    "viva_followup": "Name the three components of a production system. A set of production rules, a global database (working memory), and a control strategy.",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit I; Rich & Knight Ch.2 §2.2"
+  },
+  {
+    "id": "Z3-07",
+    "zone": 3,
+    "topic": "Repeated States in Search Design",
+    "type": "AR",
+    "difficulty": "hard",
+    "real_world": true,
+    "search_problem": true,
+    "question": "Assertion (A): A route-finder searching a road network should keep an explored set of junctions. Reason (R): A road network has a finite number of junctions.",
+    "options": [
+      "A. Both A and R are true, and R explains A",
+      "B. Both A and R are true, but R does not explain A",
+      "C. A is true, R is false",
+      "D. A is false, R is true"
+    ],
+    "answer": "B",
+    "explanation": "Both statements are true, but finiteness is not the reason. Roads form cycles and different routes reach the same junction, so without an explored set the search can loop or repeat work. Finite size alone does not prevent infinite loops in tree search.",
+    "hint": "Why would a search wander in circles on a map? Is the number of nodes the cause?",
+    "viva_followup": "What does an explored set cost? Memory proportional to the number of visited states, but it prevents re-expanding states and infinite loops.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit I; R&N 3e Ch.3 §3.3"
+  },
+  {
+    "id": "Z3-08",
+    "zone": 3,
+    "topic": "Efficient Rule Representation",
+    "type": "FIB",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": true,
+    "question": "To avoid writing a separate rule for every tile and direction, the 8-puzzle is represented with just ___ rules that move the ______ up, down, left or right.",
+    "answer": "Blank 1: 4. Blank 2: blank (empty square).",
+    "explanation": "Describing moves as movements of the blank gives 4 general rules instead of one rule per tile and direction. Choosing a good representation is one of the issues in designing a search program.",
+    "hint": "Which single object is common to every legal move?",
+    "viva_followup": "What does this show about design issues in search? A good state and rule representation can shrink the number of rules and the branching.",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit I; Rich & Knight Ch.2 §2.2.2"
+  },
+  {
+    "id": "Z4-01",
+    "zone": 4,
+    "topic": "Breadth-First Search Trace",
+    "type": "PROBLEM",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Graph (undirected): S-A, S-B, A-C, A-D, B-D, B-E, C-E, D-G, E-G. Run BFS from S to goal G. Rules: neighbours in alphabetical order; a node is queued only if never queued before; goal test when a node is removed from the queue. Give the expansion order, the queue after expanding A, and the path returned.",
+    "answer": "Expansion order: S, A, B, C, D, E, G. Queue after expanding A: [B, C, D]. Path returned: S-A-D-G (3 edges).",
+    "explanation": "BFS removes nodes in FIFO order, so all depth-1 nodes (A, B) come before depth-2 nodes (C, D, E). G is queued when D is expanded and removed last. E was already queued by B, so C does not add it again.",
+    "hint": "Draw the levels: depth 0 is S, depth 1 is A and B. Which nodes does each add at depth 2?",
+    "viva_followup": "Is the path returned the shallowest? Yes: BFS finds the goal with the fewest edges. With unequal edge costs it would not necessarily be the cheapest.",
+    "sim_data": {
+      "graph_type": "undirected",
+      "adjacency": {
+        "A": [
+          "C",
+          "D",
+          "S"
+        ],
+        "B": [
+          "D",
+          "E",
+          "S"
+        ],
+        "C": [
+          "A",
+          "E"
+        ],
+        "D": [
+          "A",
+          "B",
+          "G"
+        ],
+        "E": [
+          "B",
+          "C",
+          "G"
+        ],
+        "G": [
+          "D",
+          "E"
+        ],
+        "S": [
+          "A",
+          "B"
+        ]
+      },
+      "start": "S",
+      "goal": "G",
+      "tie_breaking": "Expand neighbours in alphabetical order; a node is added to the frontier (FIFO queue) only if it has not been generated before; goal test when a node is removed from the queue.",
+      "expansion_order": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "G"
+      ],
+      "frontier_after_each_expansion": [
+        {
+          "expanded": "S",
+          "frontier": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "expanded": "A",
+          "frontier": [
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "expanded": "B",
+          "frontier": [
+            "C",
+            "D",
+            "E"
+          ]
+        },
+        {
+          "expanded": "C",
+          "frontier": [
+            "D",
+            "E"
+          ]
+        },
+        {
+          "expanded": "D",
+          "frontier": [
+            "E",
+            "G"
+          ]
+        },
+        {
+          "expanded": "E",
+          "frontier": [
+            "G"
+          ]
+        },
+        {
+          "expanded": "G",
+          "frontier": [],
+          "note": "goal test succeeds"
+        }
+      ],
+      "solution_path": [
+        "S",
+        "A",
+        "D",
+        "G"
+      ],
+      "path_edges": 3
+    },
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.1"
+  },
+  {
+    "id": "Z4-02",
+    "zone": 4,
+    "topic": "Depth-First Search Trace",
+    "type": "PROBLEM",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Same graph as the previous question: S-A, S-B, A-C, A-D, B-D, B-E, C-E, D-G, E-G. Run depth-first search from S to goal G. Rules: visit unvisited neighbours in alphabetical order; goal test on visit. Give the visit order, the path found, and compare its length with the BFS path.",
+    "answer": "Visit order: S, A, C, E, B, D, G. Path found: S-A-C-E-B-D-G (6 edges), twice as long as the BFS path S-A-D-G (3 edges).",
+    "explanation": "DFS dives down the first (alphabetical) branch: A, then C, then E, then E's first unvisited neighbour B, then D, and finally G. It never backtracks here, but the path is longer than the shortest one.",
+    "hint": "Follow the first available alphabetical neighbour each time. Stop only when you must backtrack.",
+    "viva_followup": "What would DFS do if it hit a dead end? It would backtrack to the most recent node with unvisited neighbours. Here no backtracking was needed.",
+    "sim_data": {
+      "graph_type": "undirected",
+      "adjacency": {
+        "A": [
+          "C",
+          "D",
+          "S"
+        ],
+        "B": [
+          "D",
+          "E",
+          "S"
+        ],
+        "C": [
+          "A",
+          "E"
+        ],
+        "D": [
+          "A",
+          "B",
+          "G"
+        ],
+        "E": [
+          "B",
+          "C",
+          "G"
+        ],
+        "G": [
+          "D",
+          "E"
+        ],
+        "S": [
+          "A",
+          "B"
+        ]
+      },
+      "start": "S",
+      "goal": "G",
+      "tie_breaking": "Recursive depth-first search; visit unvisited neighbours in alphabetical order; goal test when a node is visited; the stack is the current path from S.",
+      "visit_order": [
+        "S",
+        "A",
+        "C",
+        "E",
+        "B",
+        "D",
+        "G"
+      ],
+      "stack_after_each_visit": [
+        [
+          "S"
+        ],
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "A",
+          "C"
+        ],
+        [
+          "S",
+          "A",
+          "C",
+          "E"
+        ],
+        [
+          "S",
+          "A",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "S",
+          "A",
+          "C",
+          "E",
+          "B",
+          "D"
+        ],
+        [
+          "S",
+          "A",
+          "C",
+          "E",
+          "B",
+          "D",
+          "G"
+        ]
+      ],
+      "backtracks": 0,
+      "solution_path": [
+        "S",
+        "A",
+        "C",
+        "E",
+        "B",
+        "D",
+        "G"
+      ],
+      "path_edges": 6
+    },
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.3"
+  },
+  {
+    "id": "Z4-03",
+    "zone": 4,
+    "topic": "Iterative Deepening Trace",
+    "type": "PROBLEM",
+    "difficulty": "hard",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Tree: S has children A, B; A has C, D; B has E, F; C has H; D has G (goal). Run iterative deepening with limits 0, 1, 2, ... Children in alphabetical order; every node visited (goal-tested) counts once per visit, including repeated visits across iterations. At which limit is G found, how many total node visits occur, and what is the path?",
+    "answer": "G is found at limit 3. Total visits: 1 + 3 + 7 + 6 = 17. Path: S-A-D-G.",
+    "explanation": "Limit 0 visits S; limit 1 visits S, A, B; limit 2 visits S, A, C, D, B, E, F; limit 3 visits S, A, C, H, D and then G. Repeating upper levels is wasteful but cheap, because the number of nodes grows quickly with depth.",
+    "hint": "Count visits per iteration, restarting from S each time. At limit 3, stop the moment G is reached.",
+    "viva_followup": "Why not just use a large depth limit in plain DFS? DFS with a large limit may go deep first and return a longer, non-optimal path; IDS finds the shallowest goal first.",
+    "sim_data": {
+      "graph_type": "tree",
+      "adjacency": {
+        "S": [
+          "A",
+          "B"
+        ],
+        "A": [
+          "C",
+          "D"
+        ],
+        "B": [
+          "E",
+          "F"
+        ],
+        "C": [
+          "H"
+        ],
+        "D": [
+          "G"
+        ],
+        "E": [],
+        "F": [],
+        "H": [],
+        "G": []
+      },
+      "start": "S",
+      "goal": "G",
+      "tie_breaking": "Depth-limited DFS for limit L=0,1,2,...; children in alphabetical order; goal test when a node is visited; a node at the limit is tested but not expanded.",
+      "iterations": [
+        {
+          "limit": 0,
+          "visited": [
+            "S"
+          ],
+          "found": false
+        },
+        {
+          "limit": 1,
+          "visited": [
+            "S",
+            "A",
+            "B"
+          ],
+          "found": false
+        },
+        {
+          "limit": 2,
+          "visited": [
+            "S",
+            "A",
+            "C",
+            "D",
+            "B",
+            "E",
+            "F"
+          ],
+          "found": false
+        },
+        {
+          "limit": 3,
+          "visited": [
+            "S",
+            "A",
+            "C",
+            "H",
+            "D",
+            "G"
+          ],
+          "found": true
+        }
+      ],
+      "total_visits": 17,
+      "solution_path": [
+        "S",
+        "A",
+        "D",
+        "G"
+      ]
+    },
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.5"
+  },
+  {
+    "id": "Z4-04",
+    "zone": 4,
+    "topic": "Choosing a Search Algorithm",
+    "type": "MCQ",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": true,
+    "question": "A web crawler must find the shortest chain of links (every link costs 1) between two pages. The link graph has a huge branching factor, the solution depth is unknown, and memory is tight. Which algorithm is the best choice?",
+    "options": [
+      "A. Breadth-first search",
+      "B. Depth-first search with no limit",
+      "C. Depth-limited search with a small fixed limit",
+      "D. Iterative deepening search"
+    ],
+    "answer": "D",
+    "explanation": "Iterative deepening gives the shallowest solution, as BFS does, but uses memory proportional to b*d like DFS. BFS would need to hold an exponentially large frontier. Plain DFS is not guaranteed to find the shortest chain and can go infinitely deep.",
+    "hint": "You need the shortest chain and little memory. Which algorithm combines the advantages of the other two?",
+    "viva_followup": "What is IDS's price? Repeated work at shallow levels, which is a small overhead because most nodes lie at the deepest level.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.5"
+  },
+  {
+    "id": "Z4-05",
+    "zone": 4,
+    "topic": "DFS Completeness and Cycles",
+    "type": "MCQ",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Which statement about depth-first search on a finite graph with cycles is correct?",
+    "options": [
+      "A. DFS always returns the shortest path",
+      "B. DFS tree search is always complete on finite graphs",
+      "C. DFS with a visited set is complete on finite graphs but may return a longer path",
+      "D. DFS needs memory exponential in the depth of the tree"
+    ],
+    "answer": "C",
+    "explanation": "DFS graph search, which records visited nodes, terminates on a finite graph and finds a path if one exists, but the path need not be the shortest. DFS tree search may loop forever on cycles, so option B is wrong.",
+    "hint": "What stops a search from walking around a cycle forever?",
+    "viva_followup": "What does DFS tree search do on a graph with the cycle S-A-S? It can bounce between S and A forever because it never remembers visited states.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.3"
+  },
+  {
+    "id": "Z4-06",
+    "zone": 4,
+    "topic": "BFS Optimality with Unequal Costs",
+    "type": "MCQ",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": true,
+    "question": "A routing prototype runs BFS on a road graph. Direct road S->G takes 10 minutes. Route S->A->G has two roads taking 3 and 4 minutes. Which route does BFS return?",
+    "options": [
+      "A. S->G (10 minutes), because it has the fewest roads",
+      "B. S->A->G (7 minutes), because it is cheaper",
+      "C. Either route, because BFS compares them equally",
+      "D. Neither, because BFS cannot handle weighted roads"
+    ],
+    "answer": "A",
+    "explanation": "BFS returns the path with the fewest edges, which is S->G (1 road), even though S->A->G takes only 7 minutes. BFS is optimal only if every step costs the same. Uniform-cost search would pick the 7-minute route.",
+    "hint": "Count roads, not minutes. What does BFS minimize?",
+    "viva_followup": "Which algorithm fixes this? Uniform-cost search, which expands nodes in order of path cost g(n).",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.1-3.4.2"
+  },
+  {
+    "id": "Z4-07",
+    "zone": 4,
+    "topic": "Depth-Limited Search",
+    "type": "TF",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": true,
+    "question": "True or False: Depth-limited search with limit l is incomplete if the shallowest goal lies at depth d > l.",
+    "answer": "True",
+    "explanation": "The search never looks below depth l, so it cannot reach a goal at depth d > l. Choosing l is the difficulty IDS removes by trying l = 0, 1, 2, ... in turn.",
+    "hint": "Can a node deeper than the limit ever be generated?",
+    "viva_followup": "What is the diameter idea for choosing a limit? If you know the maximum number of steps needed to reach any state, set l to it so no goal is missed.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.4"
+  },
+  {
+    "id": "Z4-08",
+    "zone": 4,
+    "topic": "IDS Optimality",
+    "type": "AR",
+    "difficulty": "hard",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Assertion (A): Iterative deepening search returns a shallowest goal when all step costs are equal. Reason (R): It runs depth-limited searches with increasing limits, so no goal at depth k can be missed before every node of depth less than k has been explored.",
+    "options": [
+      "A. Both A and R are true, and R explains A",
+      "B. Both A and R are true, but R does not explain A",
+      "C. A is true, R is false",
+      "D. A is false, R is true"
+    ],
+    "answer": "A",
+    "explanation": "In iteration k the search covers all nodes down to depth k, and any goal at a shallower depth would already have been found in an earlier iteration. So the first goal found is a shallowest one, and R explains A.",
+    "hint": "What does iteration k guarantee about everything shallower than depth k?",
+    "viva_followup": "Is IDS optimal for unequal step costs? No: it finds the shallowest goal, not the cheapest.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.5"
+  },
+  {
+    "id": "Z4-09",
+    "zone": 4,
+    "topic": "Goal Test Timing in BFS",
+    "type": "AR",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Assertion (A): With unit step costs, BFS may apply the goal test when a node is generated instead of when it is removed from the queue, and still return a shallowest solution. Reason (R): BFS generates nodes in order of non-decreasing depth, so the first goal node generated is at the shallowest possible depth.",
+    "options": [
+      "A. Both A and R are true, and R explains A",
+      "B. Both A and R are true, but R does not explain A",
+      "C. A is true, R is false",
+      "D. A is false, R is true"
+    ],
+    "answer": "A",
+    "explanation": "Because nodes are generated level by level, the first goal generated cannot be shallower than any goal still undiscovered, so testing at generation returns the same depth sooner and saves expanding the rest of that level. R explains A. This shortcut is not valid for uniform-cost search, where a cheaper path may appear later.",
+    "hint": "Compare the depth of the first goal generated with the depth of any goal generated later.",
+    "viva_followup": "Why does this shortcut fail for uniform-cost search? With unequal costs the first goal generated may sit on an expensive path, so the goal test must wait until the node is removed in cost order.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.1"
+  },
+  {
+    "id": "Z4-10",
+    "zone": 4,
+    "topic": "BFS Frontier Size",
+    "type": "FIB",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": true,
+    "question": "In a complete binary tree, BFS has just finished expanding every node at depth 2 without finding the goal. The queue now holds exactly ___ nodes.",
+    "answer": "8",
+    "explanation": "Each of the 4 depth-2 nodes added 2 children, so the queue holds all 2^3 = 8 nodes at depth 3. This shows why BFS memory grows exponentially with depth.",
+    "hint": "How many nodes are there at depth 3 in a binary tree?",
+    "viva_followup": "State the BFS space complexity. O(b^d), because it keeps the whole frontier in memory.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.1"
+  },
+  {
+    "id": "Z4-11",
+    "zone": 4,
+    "topic": "Algorithm Properties",
+    "type": "MATCH",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Match each search technique (left) with its key property (right).",
+    "left": [
+      "1. Breadth-first search",
+      "2. DFS tree search (no repeated-state check)",
+      "3. Iterative deepening search",
+      "4. Explored set (graph search)"
+    ],
+    "right": [
+      "A. Uses memory linear in depth but can loop forever on a cyclic graph",
+      "B. Avoids re-expanding states, at the price of remembering all visited states",
+      "C. Complete, and optimal for unit step costs, but its frontier grows exponentially",
+      "D. Finds the shallowest goal while using memory linear in depth"
+    ],
+    "answer": "BFS-C, DFS tree search-A, Iterative deepening-D, Explored set (graph search)-B",
+    "explanation": "BFS keeps the whole frontier, so its memory is exponential. DFS tree search uses linear memory but can loop on cycles. IDS blends both. An explored set fixes repeated states at the price of memory.",
+    "hint": "Match by memory and loop behaviour: who stores everything, who stores one path, who combines them?",
+    "viva_followup": "Which of the four is optimal for unit step costs? BFS and iterative deepening. DFS is not.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.3-3.4"
+  },
+  {
+    "id": "Z4-12",
+    "zone": 4,
+    "topic": "BFS vs IDS Trade-off",
+    "type": "SCENARIO",
+    "difficulty": "hard",
+    "real_world": true,
+    "search_problem": true,
+    "question": "A puzzle app on a low-end phone can hold only about 1,000 nodes in memory. The puzzle has branching factor b = 10 and the shallowest solution is at depth d = 5; all moves cost 1. Compare BFS and iterative deepening: (a) approximate memory in nodes, (b) nodes generated excluding the root, (c) which should the app use?",
+    "answer": "(a) BFS about b^d = 100,000 nodes; IDS about b*d = 50 nodes. (b) BFS: 10 + 100 + 1,000 + 10,000 + 100,000 = 111,110. IDS: 5(10) + 4(100) + 3(1,000) + 2(10,000) + 1(100,000) = 123,450, about 11% more. (c) Use IDS: it fits the memory limit and still returns a shallowest (optimal for unit cost) solution.",
+    "explanation": "IDS generates the nodes at depth i a total of (d - i + 1) times, but depth-d nodes only once. The small overhead (b/(b-1) = 1.11) buys a 2,000x memory saving.",
+    "hint": "Compare 100,000 with the 1,000-node memory budget. Which algorithm cannot even store its frontier?",
+    "viva_followup": "Why is the IDS overhead small? Most nodes lie at the deepest level, so the repeated shallow levels are a minor share of the total.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.4.5"
+  },
+  {
+    "id": "Z5-01",
+    "zone": 5,
+    "topic": "Simple vs Steepest-Ascent Hill Climbing",
+    "type": "MCQ",
+    "difficulty": "hard",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Terrain heights at indices 0-11: [1, 3, 5, 8, 6, 4, 5, 7, 10, 9, 6, 2]. Start at index 5. Neighbours are index-1 and index+1. Simple hill climbing checks the right neighbour first, then the left, and takes the first strictly higher one. Steepest ascent takes the highest neighbour if strictly higher. Which outcome is correct?",
+    "options": [
+      "A. Both algorithms stop at index 8 (height 10)",
+      "B. Both algorithms stop at index 3 (height 8)",
+      "C. Simple stops at index 8 (global maximum); steepest ascent stops at index 3 (local maximum)",
+      "D. Simple stops at index 3 (local maximum); steepest ascent stops at index 8 (global maximum)"
+    ],
+    "answer": "C",
+    "explanation": "Simple hill climbing goes 5 -> 6 (5) -> 7 (7) -> 8 (10) and stops at the global maximum. Steepest ascent goes 5 -> 4 (6) -> 3 (8) and stops at a local maximum, because indices 2 and 4 are lower. Greedy 'best' moves can be worse than 'first-better' moves.",
+    "hint": "Trace both from index 5. At index 5, are the right and left neighbours both higher?",
+    "viva_followup": "Does this mean simple hill climbing is better? No. The result depends on the landscape and the order in which neighbours are checked; neither is guaranteed to find the global maximum.",
+    "sim_data": {
+      "terrain_heights": [
+        1,
+        3,
+        5,
+        8,
+        6,
+        4,
+        5,
+        7,
+        10,
+        9,
+        6,
+        2
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "start_index": 5,
+      "neighbours": "index-1 and index+1",
+      "global_maximum": {
+        "index": 8,
+        "height": 10
+      },
+      "local_maxima": [
+        {
+          "index": 3,
+          "height": 8
+        },
+        {
+          "index": 8,
+          "height": 10
+        }
+      ],
+      "rules": {
+        "simple": "examine the right neighbour first, then the left; move to the first strictly higher one; stop if none",
+        "steepest_ascent": "move to the highest neighbour if strictly higher than current; stop otherwise"
+      },
+      "simple_path": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "simple_heights": [
+        4,
+        5,
+        7,
+        10
+      ],
+      "simple_stops_at": {
+        "index": 8,
+        "height": 10,
+        "type": "global maximum"
+      },
+      "steepest_path": [
+        5,
+        4,
+        3
+      ],
+      "steepest_heights": [
+        4,
+        6,
+        8
+      ],
+      "steepest_stops_at": {
+        "index": 3,
+        "height": 8,
+        "type": "local maximum"
+      }
+    },
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.4 §4.1.1"
+  },
+  {
+    "id": "Z5-02",
+    "zone": 5,
+    "topic": "Hill Climbing Memory",
+    "type": "TF",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": true,
+    "question": "True or False: Hill climbing keeps a search tree and can backtrack to an earlier state when it reaches a peak.",
+    "answer": "False",
+    "explanation": "Hill climbing keeps only the current state and its value; it does not maintain a search tree and does not backtrack. This gives it tiny memory use but lets it get stuck at local maxima.",
+    "hint": "Think about how much the algorithm remembers about where it has been.",
+    "viva_followup": "What is the benefit of keeping only the current node? Very little memory (usually constant), plus it can work in large or infinite state spaces.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.4 §4.1"
+  },
+  {
+    "id": "Z5-03",
+    "zone": 5,
+    "topic": "Plateau and Sideways Moves",
+    "type": "MCQ",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Terrain heights at indices 0-11: [1, 2, 4, 7, 7, 7, 7, 9, 12, 10, 8, 5]. Strict hill climbing (right neighbour first; move only to a strictly higher neighbour) starts at index 2. Where does it stop, and what changes if equal-height sideways moves are allowed?",
+    "options": [
+      "A. Index 8 (height 12), the global maximum; sideways moves make no difference",
+      "B. Index 3 (height 7) on a plateau; sideways moves would let it reach index 8",
+      "C. Index 7 (height 9); sideways moves would take it down to index 3",
+      "D. Index 2, because neither neighbour is higher"
+    ],
+    "answer": "B",
+    "explanation": "Strict hill climbing moves 2 -> 3 (height 7); indices 3-6 are a flat shoulder, so no neighbour is strictly higher and it stops there. With sideways moves it crosses the flat region 3, 4, 5, 6, climbs to 7 (9), then 8 (12) and stops at the global maximum. A limit on consecutive sideways moves is needed so it does not loop forever on a flat local maximum.",
+    "hint": "Where does the first flat stretch begin? Is any neighbour strictly higher there?",
+    "viva_followup": "Why limit the number of sideways moves? On a flat local maximum an unlimited sideways rule would loop forever.",
+    "sim_data": {
+      "terrain_heights": [
+        1,
+        2,
+        4,
+        7,
+        7,
+        7,
+        7,
+        9,
+        12,
+        10,
+        8,
+        5
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "start_index": 2,
+      "neighbours": "index-1 and index+1",
+      "global_maximum": {
+        "index": 8,
+        "height": 12
+      },
+      "rules": {
+        "strict": "move only to a strictly higher neighbour (right checked first)",
+        "sideways": "as strict, but allow moves to an equal-height unvisited neighbour"
+      },
+      "strict_path": [
+        2,
+        3
+      ],
+      "strict_stops_at": {
+        "index": 3,
+        "height": 7,
+        "type": "plateau (shoulder, indices 3-6)"
+      },
+      "sideways_path": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "sideways_stops_at": {
+        "index": 8,
+        "height": 12,
+        "type": "global maximum"
+      }
+    },
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.4 §4.1.1"
+  },
+  {
+    "id": "Z5-04",
+    "zone": 5,
+    "topic": "Random-Restart Hill Climbing",
+    "type": "FIB",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Each run of hill climbing from a random start reaches the goal with probability p = 0.2. The expected number of runs needed (including the successful one) is ___, which means about ___ failed runs on average.",
+    "answer": "Blank 1: 5. Blank 2: 4.",
+    "explanation": "Expected runs = 1/p = 5, so the expected number of failures is 1/p - 1 = 4. This is why random-restart hill climbing is complete with probability approaching 1.",
+    "hint": "The number of trials until the first success follows a geometric pattern. What is its mean?",
+    "viva_followup": "Why is random-restart hill climbing 'trivially complete' in the limit? Eventually one random start will land at or near a goal, so a goal is found with probability approaching 1.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.4 §4.1.1"
+  },
+  {
+    "id": "Z5-05",
+    "zone": 5,
+    "topic": "Stochastic Hill Climbing",
+    "type": "AR",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Assertion (A): Stochastic hill climbing started from the same state may end at different local maxima on different runs. Reason (R): It chooses at random among the uphill moves instead of always taking the steepest one.",
+    "options": [
+      "A. Both A and R are true, and R explains A",
+      "B. Both A and R are true, but R does not explain A",
+      "C. A is true, R is false",
+      "D. A is false, R is true"
+    ],
+    "answer": "A",
+    "explanation": "Because the uphill move is picked at random, different runs can follow different paths and reach different peaks. R is exactly why A happens. Steepest ascent from the same state is deterministic except for ties.",
+    "hint": "Which part of stochastic hill climbing is random?",
+    "viva_followup": "What is first-choice hill climbing? A stochastic variant that generates random successors until one is better than the current state; useful when a state has thousands of successors.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.4 §4.1.1"
+  },
+  {
+    "id": "Z5-06",
+    "zone": 5,
+    "topic": "CSP Backtracking",
+    "type": "AR",
+    "difficulty": "medium",
+    "real_world": false,
+    "search_problem": true,
+    "question": "Assertion (A): Backtracking search for a CSP can be much faster than generating every complete assignment. Reason (R): Constraints are checked only after all variables have been assigned.",
+    "options": [
+      "A. Both A and R are true, and R explains A",
+      "B. Both A and R are true, but R does not explain A",
+      "C. A is true, R is false",
+      "D. A is false, R is true"
+    ],
+    "answer": "C",
+    "explanation": "A is true: backtracking abandons a partial assignment as soon as a constraint is violated, pruning every completion of it. R is false: that early checking is the whole point; checking only at the end is what a generate-and-test approach does.",
+    "hint": "When does backtracking check a constraint: early or at the end?",
+    "viva_followup": "What does backtracking do on a violation? It undoes the last assignment and tries another value, or backtracks further if the variable has no values left.",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit II; R&N 3e Ch.6 §6.3; Rich & Knight Ch.3"
+  },
+  {
+    "id": "Z5-07",
+    "zone": 5,
+    "topic": "Hill-Climbing Terminology",
+    "type": "MATCH",
+    "difficulty": "easy",
+    "real_world": false,
+    "search_problem": false,
+    "question": "Match each term (left) with its description (right).",
+    "left": [
+      "1. Local maximum",
+      "2. Plateau",
+      "3. Ridge",
+      "4. Random-restart hill climbing",
+      "5. Stochastic hill climbing"
+    ],
+    "right": [
+      "A. Chooses at random among the uphill moves",
+      "B. Flat area of the landscape; may be a flat local maximum or a shoulder",
+      "C. A peak higher than all its neighbours but lower than the global maximum",
+      "D. Sequence of local maxima that is hard for greedy search to navigate",
+      "E. Repeats climbing from random initial states until a goal is found"
+    ],
+    "answer": "Local maximum-C, Plateau-B, Ridge-D, Random-restart hill climbing-E, Stochastic hill climbing-A",
+    "explanation": "A local maximum is a peak higher than its neighbours but below the global maximum. A plateau is flat ground (a flat local maximum or a shoulder). A ridge creates a chain of local maxima. Random restarts and stochastic move choice are the standard fixes.",
+    "hint": "Separate the landscape features from the algorithm variants first.",
+    "viva_followup": "Which of these is a fix and which is a problem? Local maxima, plateaus and ridges are problems; random-restart and stochastic hill climbing are ways to cope.",
+    "sim_data": null,
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.4 §4.1.1"
+  },
+  {
+    "id": "Z5-08",
+    "zone": 5,
+    "topic": "Greedy Best-First Search Trace",
+    "type": "MCQ",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": true,
+    "question": "A delivery route planner uses greedy best-first search with straight-line distances h: S=7, A=4, B=5, C=3, D=4, E=3, G=0. Roads (cost): S-A 2, S-B 3, A-C 4, A-D 6, B-D 2, B-E 3, C-G 6, D-G 3, E-G 5. Expand the lowest h; ties alphabetical. What happens?",
+    "options": [
+      "A. Expansion order S, A, C, G; returns a path of cost 12, although a path of cost 8 exists",
+      "B. Expansion order S, B, D, G; returns the optimal path of cost 8",
+      "C. Expansion order S, A, C, G; returns a path of cost 12 which is optimal",
+      "D. Expansion order S, A, D, G; returns a path of cost 11"
+    ],
+    "answer": "A",
+    "explanation": "Greedy expands S, then A (h=4), then C (h=3), then G (h=0), returning S-A-C-G with cost 2+4+6 = 12. The path S-B-D-G costs 3+2+3 = 8, so greedy is not optimal because it ignores the cost already paid, g(n).",
+    "hint": "At each step compare only h-values. Do the edge costs affect which node is expanded?",
+    "viva_followup": "What fixes this? A* uses f(n) = g(n) + h(n); with an admissible heuristic it returns the optimal path.",
+    "sim_data": {
+      "graph_type": "undirected",
+      "edges": [
+        {
+          "from": "S",
+          "to": "A",
+          "cost": 2
+        },
+        {
+          "from": "S",
+          "to": "B",
+          "cost": 3
+        },
+        {
+          "from": "A",
+          "to": "C",
+          "cost": 4
+        },
+        {
+          "from": "A",
+          "to": "D",
+          "cost": 6
+        },
+        {
+          "from": "B",
+          "to": "D",
+          "cost": 2
+        },
+        {
+          "from": "B",
+          "to": "E",
+          "cost": 3
+        },
+        {
+          "from": "C",
+          "to": "G",
+          "cost": 6
+        },
+        {
+          "from": "D",
+          "to": "G",
+          "cost": 3
+        },
+        {
+          "from": "E",
+          "to": "G",
+          "cost": 5
+        }
+      ],
+      "adjacency": {
+        "A": [
+          "C",
+          "D",
+          "S"
+        ],
+        "B": [
+          "D",
+          "E",
+          "S"
+        ],
+        "C": [
+          "A",
+          "G"
+        ],
+        "D": [
+          "A",
+          "B",
+          "G"
+        ],
+        "E": [
+          "B",
+          "G"
+        ],
+        "G": [
+          "C",
+          "D",
+          "E"
+        ],
+        "S": [
+          "A",
+          "B"
+        ]
+      },
+      "heuristic_h": {
+        "S": 7,
+        "A": 4,
+        "B": 5,
+        "C": 3,
+        "D": 4,
+        "E": 3,
+        "G": 0
+      },
+      "start": "S",
+      "goal": "G",
+      "tie_breaking": "Greedy best-first: always expand the frontier node with the smallest h; ties alphabetical; a node is added only the first time it is generated; goal test on expansion.",
+      "expansion_order": [
+        "S",
+        "A",
+        "C",
+        "G"
+      ],
+      "frontier_after_each_expansion": [
+        {
+          "expanded": "S",
+          "frontier": [
+            [
+              "A",
+              4
+            ],
+            [
+              "B",
+              5
+            ]
+          ]
+        },
+        {
+          "expanded": "A",
+          "frontier": [
+            [
+              "C",
+              3
+            ],
+            [
+              "D",
+              4
+            ],
+            [
+              "B",
+              5
+            ]
+          ]
+        },
+        {
+          "expanded": "C",
+          "frontier": [
+            [
+              "G",
+              0
+            ],
+            [
+              "D",
+              4
+            ],
+            [
+              "B",
+              5
+            ]
+          ]
+        },
+        {
+          "expanded": "G",
+          "frontier": [
+            [
+              "D",
+              4
+            ],
+            [
+              "B",
+              5
+            ]
+          ]
+        }
+      ],
+      "solution_path": [
+        "S",
+        "A",
+        "C",
+        "G"
+      ],
+      "solution_cost": 12,
+      "optimal_path": [
+        "S",
+        "B",
+        "D",
+        "G"
+      ],
+      "optimal_cost": 8
+    },
+    "source": "notes",
+    "notes_reference": "Unit II; R&N 3e Ch.3 §3.5.1"
+  },
+  {
+    "id": "Z5-09",
+    "zone": 5,
+    "topic": "Timetable CSP Formulation",
+    "type": "SCENARIO",
+    "difficulty": "hard",
+    "real_world": true,
+    "search_problem": true,
+    "question": "A department must schedule four classes - AI, Stats, DBMS, Web - into 9 am, 10 am or 11 am. Prof. Rao teaches both AI and Stats; some students take both AI and DBMS; some take both Web and Stats; DBMS cannot be at 9 am (room unavailable). Formulate as a CSP (variables, domains, constraints) and give one valid timetable, naming each constraint you checked.",
+    "answer": "Variables: AI, Stats, DBMS, Web. Domains: {9, 10, 11} (DBMS: {10, 11} after the unary constraint). Constraints: AI != Stats, AI != DBMS, Web != Stats, DBMS != 9. One valid timetable: AI = 9, Stats = 10, DBMS = 10, Web = 11.",
+    "explanation": "Each class is a variable with a time-slot domain; shared lecturers or students become binary 'not equal' constraints, and the room restriction is a unary constraint. In the example timetable, AI(9) != Stats(10), AI(9) != DBMS(10), Web(11) != Stats(10) and DBMS is not at 9, so every constraint holds.",
+    "hint": "List what shares a resource: lecturer, students, room. Each shared resource gives a 'not equal' constraint.",
+    "viva_followup": "What would backtracking do if no slot remained for a variable? It would undo the previous assignment and try a different value, backtracking further if needed.",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit II; R&N 3e Ch.6 §6.1; Rich & Knight Ch.3"
+  },
+  {
+    "id": "Z5-10",
+    "zone": 5,
+    "topic": "Map-Colouring CSP",
+    "type": "TF",
+    "difficulty": "easy",
+    "real_world": true,
+    "search_problem": true,
+    "question": "Regions A-F; adjacent pairs: A-B, A-C, B-C, B-D, C-D, C-E, D-E, D-F, E-F. Colours {Red, Green, Blue}. True or False: the assignment A=Red, B=Green, C=Blue, D=Green, E=Red, F=Blue is a valid colouring.",
+    "answer": "False",
+    "explanation": "B and D are adjacent and both Green, violating the constraint B != D. Every other adjacent pair differs. A valid colouring is A=Red, B=Green, C=Blue, D=Red, E=Green, F=Blue.",
+    "hint": "Check every adjacent pair. One pair involving D and Green is a problem.",
+    "viva_followup": "How many valid 3-colourings does this map have? Six: once A, B and C take different colours, D must match A, E must match B and F must match C.",
+    "sim_data": {
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "adjacency": {
+        "A": [
+          "B",
+          "C"
+        ],
+        "B": [
+          "A",
+          "C",
+          "D"
+        ],
+        "C": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ],
+        "D": [
+          "B",
+          "C",
+          "E",
+          "F"
+        ],
+        "E": [
+          "C",
+          "D",
+          "F"
+        ],
+        "F": [
+          "D",
+          "E"
+        ]
+      },
+      "colours": [
+        "Red",
+        "Green",
+        "Blue"
+      ],
+      "constraint": "Adjacent regions must have different colours",
+      "valid_solution": {
+        "A": "Red",
+        "B": "Green",
+        "C": "Blue",
+        "D": "Red",
+        "E": "Green",
+        "F": "Blue"
+      },
+      "invalid_assignment": {
+        "A": "Red",
+        "B": "Green",
+        "C": "Blue",
+        "D": "Green",
+        "E": "Red",
+        "F": "Blue"
+      },
+      "violated_constraint": "B != D (B and D are adjacent and both Green)",
+      "total_valid_colourings": 6
+    },
+    "source": "textbook",
+    "notes_reference": "Unit II; R&N 3e Ch.6 §6.1.1"
+  },
+  {
+    "id": "Z5-11",
+    "zone": 5,
+    "topic": "Sudoku-Style CSP",
+    "type": "FIB",
+    "difficulty": "easy",
+    "real_world": true,
+    "search_problem": true,
+    "question": "4x4 Sudoku with digits 1-4 (each row, column and 2x2 box has no repeats). Rows: [1,2,3,4], [3,4,1,2], [2,1,_,_], [4,3,2,1]. Fill the blanks in row 3: third cell = ___, fourth cell = ___.",
+    "answer": "Third cell: 4. Fourth cell: 3.",
+    "explanation": "Column 3 already has 3, 1 and 2, so the missing digit is 4. Column 4 has 4, 2 and 1, so the missing digit is 3. Row 3 then reads 2, 1, 4, 3, which satisfies the row and box constraints.",
+    "hint": "Use the column constraints first: which digit is missing from column 3?",
+    "viva_followup": "Name the CSP elements. Variables: the empty cells. Domains: {1,2,3,4}. Constraints: all-different in each row, column and box.",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit II; R&N 3e Ch.6 §6.1"
+  },
+  {
+    "id": "Z5-12",
+    "zone": 5,
+    "topic": "Means-End Analysis",
+    "type": "MCQ",
+    "difficulty": "medium",
+    "real_world": true,
+    "search_problem": false,
+    "question": "A robot is in Room C. A parcel is in Room A. Goal: parcel in Room B. Operators: Move(x->y) needs the robot at x; Pickup needs the robot in the parcel's room; Putdown needs the robot holding the parcel and puts it in the robot's room. Using means-end analysis, which action is executed first in the final plan?",
+    "options": [
+      "A. Pickup",
+      "B. Move(A->B)",
+      "C. Putdown",
+      "D. Move(C->A)"
+    ],
+    "answer": "D",
+    "explanation": "The difference is 'parcel in A vs B', reduced by Putdown in B. Its preconditions (holding the parcel, being in B) create sub-goals: Pickup requires being in A, and Move(A->B) brings the robot to B. Solving these backwards gives the plan Move(C->A), Pickup, Move(A->B), Putdown, so the first action is Move(C->A).",
+    "hint": "Start with the difference between current and goal states, not with the robot's position.",
+    "viva_followup": "What are the three steps of means-end analysis? Find the difference, choose an operator that reduces it, and recursively solve for the operator's unmet preconditions.",
+    "sim_data": null,
+    "source": "textbook",
+    "notes_reference": "Unit II; Rich & Knight Ch.3 §3.6"
+  }
+]
